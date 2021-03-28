@@ -12,9 +12,12 @@ public class Farm{
     TextArea output;
     Thread thLight;
     petsStatus petStat;
+    boolean work;
 
 
     public Farm(TextArea text, Circle light1, Circle light2, Circle light3){
+        work = true;
+
         feeders = new ArrayList<Feeder>(3);
         lights = new ArrayList<Circle>(3);
         for (int i = 0; i < 3; i++)
@@ -34,13 +37,14 @@ public class Farm{
 
     class petsStatus extends Thread {
         public void run() {
-            while (true) {
+            while (work) {
                 for (int i = 0; i < 3; i++) {
                     try {
                         sleep(300);            // 1s = 1000 millis
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
+                    if(!work) return;
                     if (!feeders.get(i).isFree())
                         output.setText(output.getText() + "> " + feeders.get(i).getAnimal().getName() + " ест.\n");
                 }
@@ -49,7 +53,7 @@ public class Farm{
     }
     class updateLight implements Runnable{
         public void run() {
-            while (true) {
+            while (work) {
                 for (int i = 0; i < 3; i++) {
                     if (!feeders.get(i).isFree()) lights.get(i).setFill(javafx.scene.paint.Color.RED);
                     else lights.get(i).setFill(javafx.scene.paint.Color.BLUE);
@@ -77,5 +81,12 @@ public class Farm{
         if (!feeders.get(number).isFree()){
             feeders.get(number).removeAnimal();
         }
+    }
+
+    public void closeFarm() throws InterruptedException {
+        work = false;
+        Thread.sleep(300);          // We wait before all thread stop
+        thLight.interrupt();
+        petStat.interrupt();
     }
 }
