@@ -13,6 +13,11 @@ public class Feeder {
         free = false;
     }
 
+    public void removeAnimal(){
+        free = true;
+        animal = null;
+    }
+
     public boolean isFree() {
         return free;
     }

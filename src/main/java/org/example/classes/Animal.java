@@ -3,7 +3,7 @@ package org.example.classes;
 public class Animal {
     String name;
 
-    Animal(String name){
+    public Animal(String name){
         this.name = name;
     }
 
