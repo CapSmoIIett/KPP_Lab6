@@ -1,5 +1,6 @@
 package org.example.classes;
 
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.shape.Circle;
 
@@ -7,32 +8,39 @@ import java.util.*;
 
 public class Farm{
 
-    ArrayList<Feeder> feeders;
-    ArrayList<Circle> lights;
-    TextArea output;
-    Thread thLight;
-    petsStatus petStat;
-    boolean work;
+    private ArrayList<Feeder> feeders;
+    private ArrayList<Circle> lights;
+    private ArrayList<Label> labels;
+    private TextArea output;
+    private Thread thLight;
+    private petsStatus petStat;
+    private boolean work;
 
 
-    public Farm(TextArea text, Circle light1, Circle light2, Circle light3){
-        work = true;
+    public Farm(TextArea text,
+                Circle light1, Circle light2, Circle light3,
+                Label  label1, Label  label2, Label  label3){
+        this.work = true;
 
-        feeders = new ArrayList<Feeder>(3);
-        lights = new ArrayList<Circle>(3);
+        this.feeders = new ArrayList<Feeder>();
+        this.lights = new ArrayList<Circle>();
+        this.labels = new ArrayList<Label>();
         for (int i = 0; i < 3; i++)
-            feeders.add(i, new Feeder());
-        lights.add(0, light1);
-        lights.add(1, light2);
-        lights.add(2, light3);
-        output = text;
+            this.feeders.add(new Feeder());
+        this.lights.add(light1);
+        this.lights.add(light2);
+        this.lights.add(light3);
+        this.labels.add(label1);
+        this.labels.add(label2);
+        this.labels.add(label3);
+        this.output = text;
 
-        petStat = new petsStatus();          // Start thread printing in text field
-        petStat.start();
+        this.petStat = new petsStatus();          // Start thread printing in text field
+        this.petStat.start();
 
         updateLight upLight = new updateLight();
-        thLight = new Thread (upLight);
-        thLight.start();
+        this.thLight = new Thread (upLight);
+        this.thLight.start();
     }
 
     class petsStatus extends Thread {
@@ -65,14 +73,17 @@ public class Farm{
     public void addPet(Animal pet){
         if (feeders.get(0).isFree()){
             feeders.get(0).setAnimal(pet);
+            labels.get(0).setText(pet.getName());
             return;
         }
         if (feeders.get(1).isFree()){
             feeders.get(1).setAnimal(pet);
+            labels.get(1).setText(pet.getName());
             return;
         }
         if (feeders.get(2).isFree()){
             feeders.get(2).setAnimal(pet);
+            labels.get(2).setText(pet.getName());
             return;
         }
     }
@@ -80,6 +91,7 @@ public class Farm{
     public void deletePet(int number){
         if (!feeders.get(number).isFree()){
             feeders.get(number).removeAnimal();
+            labels.get(number).setText(" ");
         }
     }
 

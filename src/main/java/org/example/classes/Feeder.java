@@ -1,11 +1,11 @@
 package org.example.classes;
 
 public class Feeder {
-    Animal animal;
-    boolean free;
+    private Animal animal;
+    private boolean free;
 
     Feeder(){
-        free = true;
+        this.free = true;
     }
 
     public void setAnimal(Animal pet){

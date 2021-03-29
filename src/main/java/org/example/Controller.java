@@ -3,6 +3,7 @@ package org.example;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
+import javafx.scene.control.Label;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
 import javafx.scene.shape.Circle;
@@ -31,6 +32,15 @@ public class Controller {
 
     @FXML
     private Circle lightFeed3;
+
+    @FXML
+    private Label labelPetFeed2;
+
+    @FXML
+    private Label labelPetFeed3;
+
+    @FXML
+    private Label labelPetFeed1;
 
     @FXML
     void addCat(ActionEvent event) {
@@ -78,6 +88,6 @@ public class Controller {
 
     @FXML
     void initialize() {
-        farm = new Farm(textField, lightFeed1, lightFeed2, lightFeed3);
+        farm = new Farm(textField, lightFeed1, lightFeed2, lightFeed3, labelPetFeed1, labelPetFeed2, labelPetFeed3);
     }
 }

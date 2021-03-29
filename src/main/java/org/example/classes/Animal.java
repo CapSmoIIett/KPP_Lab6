@@ -1,7 +1,7 @@
 package org.example.classes;
 
 public class Animal {
-    String name;
+    private String name;
 
     public Animal(String name){
         this.name = name;
